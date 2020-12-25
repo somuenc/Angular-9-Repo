@@ -1,0 +1,59 @@
+<h2>Course Form</h2>
+<form ngForm #form="ngForm" (ngSubmit)="submit(form)">
+  <div>
+    <div class="form-group">
+      <label for="courseName">Course Name</label>
+      <input
+      ngModel
+      #courseName="ngModel"
+      required
+      minlength="5"
+      name="courseName"
+      type="text"
+      id="courseName"
+      class="form-control">
+      <div class="alert alert-danger" *ngIf="courseName.touched && !courseName.valid">
+        <div *ngIf="courseName.errors.required">CourseName is required.</div>
+        <div *ngIf="courseName.errors.minlength">CourseName should be minimum of 5 characters length.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select
+        ngModel
+        required
+        #category="ngModel"
+        name="category"
+        id="category"
+        class="form-control">
+        <option value="">Select Category</option>
+        <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+      </select>
+      <div class="alert alert-danger" *ngIf="category.touched && !category.valid">
+        Category is required
+      </div>
+    </div>
+
+    <div class="checkbox">
+      <label>
+        <input
+          ngModel
+          required
+          #hasGuarantee="ngModel"
+          name="hasGuarantee"
+          type="checkbox">
+          30 day money-back guarantee
+      </label>
+    </div>
+    <div class="alert alert-danger" *ngIf="hasGuarantee.touched  && !hasGuarantee.valid">
+      HasGuarantee is required
+    </div>
+
+    <p>
+      {{ form.value | json }}
+    </p>
+
+    <button class="btn btn-primary" [disabled]="!form.valid">Create</button>
+  </div>
+</form>
